@@ -1,0 +1,9 @@
+# Archivos del CLION
+cmake-build-debug/
+.idea/
+
+# Ejecutables
+tpi
+*.exe
+*.a
+*.o

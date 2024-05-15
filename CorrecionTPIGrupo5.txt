@@ -1,0 +1,223 @@
+## Re-entregar
+
+En este documento encontraran un resumen de los tests que pasa y falla su TPI, los tests que fallan deben hacerlos ustedes.
+Esperamos que para esto los nombres sean lo suficiente declarativos para que se den cuenta de los casos borde que no consideraron inicialmente.  
+
+Un pequeño resumen de los errores mas importantes: 
+
+De 59 tests, 48 pasan. 
+
+Cumplen las complejidades especificadas en el enunciado. 
+
+Les falta el predicado bool sonGrillasIguales(grilla g0, grilla g1); lo agregue para corregir pero lo tienen que hacerlos ustedes.
+GRUPO 5 en particular el problema mas grave es que no pasa ningun test de cantidadDeSaltos ya que estos crashean (en vez de retornar un resultado erroneo termina el programa con un exit code). 
+En particular para el caso de ningun salto el programa crashea tambien, podrian empezar por alli. 
+Para que el TP este aprobado no deben tener bugs, cualquier duda pueden consultar por Discord o en el horario de consultas tanto a mi como a otros docente (yo el viernes 24/07 no voy a poder estar).
+
+Para los errores de obtener latitud tengan en cuenta que lo que hay un margen de 0.00001 de error y los que les dice el test es que en principiio no son lo suficientemente precisos:  
+
+``is 0.0004009999
+9999654301, which exceeds 0.00001,
+``
+Ejemplo: 
+EXPECT_NEAR(obtenerLongitud(obtenerPosicion(v[i])),
+                    obtenerLongitud(obtenerPosicion(res[i])), 0.00001);
+
+
+
+##################### template-correccion - Grupo5\tpi.exe"
+Implementando TPI!!
+[==========] Running 58 tests from 9 test cases.
+[----------] Global test environment set-up.
+[----------] 5 tests from tiempoTotalTEST
+[ RUN      ] tiempoTotalTEST.viajeOrdenado
+[       OK ] tiempoTotalTEST.viajeOrdenado (0 ms)
+[ RUN      ] tiempoTotalTEST.viajeDesordenado
+[       OK ] tiempoTotalTEST.viajeDesordenado (0 ms)
+[ RUN      ] tiempoTotalTEST.viajeDesordenado2
+[       OK ] tiempoTotalTEST.viajeDesordenado2 (0 ms)
+[ RUN      ] tiempoTotalTEST.viajeLargo
+[       OK ] tiempoTotalTEST.viajeLargo (0 ms)
+[ RUN      ] tiempoTotalTEST.viajeOrdenadoAlReves
+[       OK ] tiempoTotalTEST.viajeOrdenadoAlReves (0 ms)
+[----------] 5 tests from tiempoTotalTEST (16 ms total)
+
+[----------] 7 tests from recorridoNoCubiertoTEST
+[ RUN      ] recorridoNoCubiertoTEST.viajePerfecto
+[       OK ] recorridoNoCubiertoTEST.viajePerfecto (0 ms)
+[ RUN      ] recorridoNoCubiertoTEST.viajeConImperfeccionesMenoresAlUmbral
+[       OK ] recorridoNoCubiertoTEST.viajeConImperfeccionesMenoresAlUmbral (0 ms)
+[ RUN      ] recorridoNoCubiertoTEST.viajeConImperfeccionesMayoresAlUmbral
+[       OK ] recorridoNoCubiertoTEST.viajeConImperfeccionesMayoresAlUmbral (0 ms)
+[ RUN      ] recorridoNoCubiertoTEST.recorridoVacio
+[       OK ] recorridoNoCubiertoTEST.recorridoVacio (0 ms)
+[ RUN      ] recorridoNoCubiertoTEST.viajeMasLargo
+[       OK ] recorridoNoCubiertoTEST.viajeMasLargo (0 ms)
+[ RUN      ] recorridoNoCubiertoTEST.viajeMasCorto
+[       OK ] recorridoNoCubiertoTEST.viajeMasCorto (0 ms)
+[ RUN      ] recorridoNoCubiertoTEST.viajeTramposo
+[       OK ] recorridoNoCubiertoTEST.viajeTramposo (0 ms)
+[----------] 7 tests from recorridoNoCubiertoTEST (28 ms total)
+
+[----------] 11 tests from flotaTotalTEST
+[ RUN      ] flotaTotalTEST.todosAntesDeFranja
+[       OK ] flotaTotalTEST.todosAntesDeFranja (0 ms)
+[ RUN      ] flotaTotalTEST.todosDespuesDeFranja
+[       OK ] flotaTotalTEST.todosDespuesDeFranja (0 ms)
+[ RUN      ] flotaTotalTEST.todosFuera
+[       OK ] flotaTotalTEST.todosFuera (0 ms)
+[ RUN      ] flotaTotalTEST.AlgunosAdentro
+[       OK ] flotaTotalTEST.AlgunosAdentro (0 ms)
+[ RUN      ] flotaTotalTEST.primerosAdentro
+[       OK ] flotaTotalTEST.primerosAdentro (0 ms)
+[ RUN      ] flotaTotalTEST.ultimosAdentro
+[       OK ] flotaTotalTEST.ultimosAdentro (0 ms)
+[ RUN      ] flotaTotalTEST.todosAdentro
+[       OK ] flotaTotalTEST.todosAdentro (0 ms)
+[ RUN      ] flotaTotalTEST.primeroAdentroPorBorde
+[       OK ] flotaTotalTEST.primeroAdentroPorBorde (0 ms)
+[ RUN      ] flotaTotalTEST.ultimoAdentroPorBorde
+[       OK ] flotaTotalTEST.ultimoAdentroPorBorde (0 ms)
+[ RUN      ] flotaTotalTEST.viajesOrdenados
+[       OK ] flotaTotalTEST.viajesOrdenados (0 ms)
+[ RUN      ] flotaTotalTEST.sinViajes
+[       OK ] flotaTotalTEST.sinViajes (0 ms)
+[----------] 11 tests from flotaTotalTEST (35 ms total)
+
+[----------] 7 tests from excesoDeVelocidadTEST
+[ RUN      ] excesoDeVelocidadTEST.noSuperaLaVelocidad
+[       OK ] excesoDeVelocidadTEST.noSuperaLaVelocidad (0 ms)
+[ RUN      ] excesoDeVelocidadTEST.superaLaVelocidad
+[       OK ] excesoDeVelocidadTEST.superaLaVelocidad (0 ms)
+[ RUN      ] excesoDeVelocidadTEST.unPuntoSuperaElPromedio
+[       OK ] excesoDeVelocidadTEST.unPuntoSuperaElPromedio (0 ms)
+[ RUN      ] excesoDeVelocidadTEST.unPuntoSuperaElPromedioDesordenado
+[       OK ] excesoDeVelocidadTEST.unPuntoSuperaElPromedioDesordenado (0 ms)
+[ RUN      ] excesoDeVelocidadTEST.justo80KM
+############################# template-correccion - Grupo5/test/excesoDeVelocidadTEST.cpp:49: Failure
+Value of: excesoDeVelocidad(v)
+  Actual: true
+Expected: false
+[  FAILED  ] excesoDeVelocidadTEST.justo80KM (8 ms)
+[ RUN      ] excesoDeVelocidadTEST.justo80KMDesordenado
+############################# template-correccion - Grupo5/test/excesoDeVelocidadTEST.cpp:57: Failure
+Value of: excesoDeVelocidad(v)
+  Actual: true
+Expected: false
+[  FAILED  ] excesoDeVelocidadTEST.justo80KMDesordenado (6 ms)
+[ RUN      ] excesoDeVelocidadTEST.a79KM
+[       OK ] excesoDeVelocidadTEST.a79KM (0 ms)
+[----------] 7 tests from excesoDeVelocidadTEST (45 ms total)
+
+[----------] 6 tests from distanciaTotalTEST
+[ RUN      ] distanciaTotalTEST.viajeOrdenado
+[       OK ] distanciaTotalTEST.viajeOrdenado (0 ms)
+[ RUN      ] distanciaTotalTEST.viajeDesordenado
+[       OK ] distanciaTotalTEST.viajeDesordenado (0 ms)
+[ RUN      ] distanciaTotalTEST.viajeParado
+[       OK ] distanciaTotalTEST.viajeParado (0 ms)
+[ RUN      ] distanciaTotalTEST.viajeVaYVuelve
+[       OK ] distanciaTotalTEST.viajeVaYVuelve (0 ms)
+[ RUN      ] distanciaTotalTEST.viajeOrdenadoAlReves
+[       OK ] distanciaTotalTEST.viajeOrdenadoAlReves (0 ms)
+[ RUN      ] distanciaTotalTEST.viajeLargo
+[       OK ] distanciaTotalTEST.viajeLargo (0 ms)
+[----------] 6 tests from distanciaTotalTEST (36 ms total)
+
+[----------] 4 tests from distanciaAuxTEST
+[ RUN      ] distanciaAuxTEST.distanciaUnoMismoEsCero
+[       OK ] distanciaAuxTEST.distanciaUnoMismoEsCero (0 ms)
+[ RUN      ] distanciaAuxTEST.distanciaMoviendoEnLat
+[       OK ] distanciaAuxTEST.distanciaMoviendoEnLat (0 ms)
+[ RUN      ] distanciaAuxTEST.distanciaMoviendoEnLng
+[       OK ] distanciaAuxTEST.distanciaMoviendoEnLng (0 ms)
+[ RUN      ] distanciaAuxTEST.distanciaMoviendoEnLatYLng
+[       OK ] distanciaAuxTEST.distanciaMoviendoEnLatYLng (0 ms)
+[----------] 4 tests from distanciaAuxTEST (15 ms total)
+
+[----------] 3 tests from corregirViajeTEST
+[ RUN      ] corregirViajeTEST.faltaUno
+############################# template-correccion - Grupo5/test/corregirViajeTEST.cpp:90: Failure
+The difference between obtenerLatitud(obtenerPosicion(v[i])) and obtenerLatitud(obtenerPosicion(res[i])) is 0.0004009999
+9999654301, which exceeds 0.00001, where
+obtenerLatitud(obtenerPosicion(v[i])) evaluates to -34.589770000000001,
+obtenerLatitud(obtenerPosicion(res[i])) evaluates to -34.590170999999998, and
+0.00001 evaluates to 1.0000000000000001e-05.
+############################# template-correccion - Grupo5/test/corregirViajeTEST.cpp:92: Failure
+The difference between obtenerLongitud(obtenerPosicion(v[i])) and obtenerLongitud(obtenerPosicion(res[i])) is 0.00151572
+72727321924, which exceeds 0.00001, where
+obtenerLongitud(obtenerPosicion(v[i])) evaluates to -58.404630727272732,
+obtenerLongitud(obtenerPosicion(res[i])) evaluates to -58.403115, and
+0.00001 evaluates to 1.0000000000000001e-05.
+[  FAILED  ] corregirViajeTEST.faltaUno (32 ms)
+[ RUN      ] corregirViajeTEST.faltaElUltimo
+[       OK ] corregirViajeTEST.faltaElUltimo (0 ms)
+[ RUN      ] corregirViajeTEST.faltaDosSeguidos
+############################# template-correccion - Grupo5/test/corregirViajeTEST.cpp:164: Failure
+The difference between obtenerLatitud(obtenerPosicion(v[i])) and obtenerLatitud(obtenerPosicion(res[i])) is 4.9394640690
+536562e-05, which exceeds 0.00001, where
+obtenerLatitud(obtenerPosicion(v[i])) evaluates to -34.547961605359312,
+obtenerLatitud(obtenerPosicion(res[i])) evaluates to -34.548011000000002, and
+0.00001 evaluates to 1.0000000000000001e-05.
+############################# template-correccion - Grupo5/test/corregirViajeTEST.cpp:166: Failure
+The difference between obtenerLongitud(obtenerPosicion(v[i])) and obtenerLongitud(obtenerPosicion(res[i])) is 0.00091563
+459196208896, which exceeds 0.00001, where
+obtenerLongitud(obtenerPosicion(v[i])) evaluates to -58.439533365408039,
+obtenerLongitud(obtenerPosicion(res[i])) evaluates to -58.440449000000001, and
+0.00001 evaluates to 1.0000000000000001e-05.
+############################# template-correccion - Grupo5/test/corregirViajeTEST.cpp:164: Failure
+The difference between obtenerLatitud(obtenerPosicion(v[i])) and obtenerLatitud(obtenerPosicion(res[i])) is 0.0001698124
+2387714701, which exceeds 0.00001, where
+obtenerLatitud(obtenerPosicion(v[i])) evaluates to -34.553960187576124,
+obtenerLatitud(obtenerPosicion(res[i])) evaluates to -34.554130000000001, and
+0.00001 evaluates to 1.0000000000000001e-05.
+############################# template-correccion - Grupo5/test/corregirViajeTEST.cpp:166: Failure
+The difference between obtenerLongitud(obtenerPosicion(v[i])) and obtenerLongitud(obtenerPosicion(res[i])) is 0.00313521
+07186393141, which exceeds 0.00001, where
+obtenerLongitud(obtenerPosicion(v[i])) evaluates to -58.435831789281359,
+obtenerLongitud(obtenerPosicion(res[i])) evaluates to -58.438966999999998, and
+0.00001 evaluates to 1.0000000000000001e-05.
+[  FAILED  ] corregirViajeTEST.faltaDosSeguidos (74 ms)
+[----------] 3 tests from corregirViajeTEST (118 ms total)
+
+[----------] 9 tests from construirGrillaTEST
+[ RUN      ] construirGrillaTEST.nombresCorrectosDistanciaParNParMPar
+[       OK ] construirGrillaTEST.nombresCorrectosDistanciaParNParMPar (0 ms)
+[ RUN      ] construirGrillaTEST.nombresCorrectosDistanciaImparNParMPar
+[       OK ] construirGrillaTEST.nombresCorrectosDistanciaImparNParMPar (0 ms)
+[ RUN      ] construirGrillaTEST.nombresCorrectosDistanciaParNParMImpar
+[       OK ] construirGrillaTEST.nombresCorrectosDistanciaParNParMImpar (0 ms)
+[ RUN      ] construirGrillaTEST.nombresCorrectosDistanciaImparNParMImpar
+[       OK ] construirGrillaTEST.nombresCorrectosDistanciaImparNParMImpar (0 ms)
+[ RUN      ] construirGrillaTEST.nombresCorrectosDistanciaParNImparMPar
+[       OK ] construirGrillaTEST.nombresCorrectosDistanciaParNImparMPar (0 ms)
+[ RUN      ] construirGrillaTEST.nombresCorrectosDistanciaImparNImparMPar
+[       OK ] construirGrillaTEST.nombresCorrectosDistanciaImparNImparMPar (0 ms)
+[ RUN      ] construirGrillaTEST.nombresCorrectosDistanciaParNImparMImpar
+[       OK ] construirGrillaTEST.nombresCorrectosDistanciaParNImparMImpar (0 ms)
+[ RUN      ] construirGrillaTEST.nombresCorrectosDistanciaImparNImparMImpar
+[       OK ] construirGrillaTEST.nombresCorrectosDistanciaImparNImparMImpar (0 ms)
+[ RUN      ] construirGrillaTEST.tamanoCorrecto
+[       OK ] construirGrillaTEST.tamanoCorrecto (0 ms)
+[----------] 9 tests from construirGrillaTEST (76 ms total)
+
+[----------] 6 tests from cantidadDeSaltosTEST
+[ RUN      ] cantidadDeSaltosTEST.movimientoDiagonalNoProduceSaltos
+
+
+Les dejo como guia unas sugerencia de que tests tratar de implementary que casos considerar.
+
+TEST(cantidadDeSaltosTEST, ningunSaltoOrdenados){
+
+    \\ COMPLETAR
+
+    EXPECT_EQ(cantidadDeSaltos(g,v),0);
+}
+
+
+TEST(cantidadDeSaltosTEST, movimientoDiagonalNoProduceSaltos)
+TEST(cantidadDeSaltosTEST, todosSaltosOrdenados)
+TEST(cantidadDeSaltosTEST, algunosSaltosOrdenados)
+TEST(cantidadDeSaltosTEST, ningunSaltoDesordenados)
+TEST(cantidadDeSaltosTEST, todosSaltosDesordenados)
+TEST(cantidadDeSaltosTEST, algunosSaltosDesordenados)
