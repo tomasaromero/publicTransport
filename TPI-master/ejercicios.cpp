@@ -60,8 +60,8 @@ grilla construirGrilla(gps esq1, gps esq2, int n, int m) {
     grilla resp = {};
     double esq1Latitud = obtenerLatitud(esq1), esq1Longitud = obtenerLongitud(esq1);
     double esq2Latitud = obtenerLatitud(esq2), esq2Longitud = obtenerLongitud(esq2);
-    double altoCelda = (esq1Latitud - esq2Latitud) / n;
-    double anchoCelda = (esq2Longitud - esq1Longitud) / m;
+    double altoCelda   = (esq1Latitud  - esq2Latitud)  / n;
+    double anchoCelda  = (esq2Longitud - esq1Longitud) / m;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             celda c = {puntoGps(esq1Latitud - altoCelda * i, esq1Longitud + anchoCelda * j),
@@ -77,17 +77,18 @@ grilla construirGrilla(gps esq1, gps esq2, int n, int m) {
 int cantidadDeSaltos(grilla g, viaje v) {
     int resp=0;
     // Guardamos los puntos del viaje con el nombre de su celda correspondiente.
-    vector<tuple<tuple<tiempo, gps>, nombre>> celdasDeViaje;
+    vector<tuple<tuple<tiempo, gps>, nombre>> viajeConNombres;
     for (int i = 0; i < g.size(); ++i) {
         for (int j = 0; j < v.size(); ++j) {
             if(esCeldaDeCoordenadas(get<1>(v[j]),g[i])){
-                celdasDeViaje.push_back(make_tuple(v[j], get<2>(g[i]) ));
+                viajeConNombres.push_back(make_tuple(v[j], get<2>(g[i]) ));
             }
         }
     }
-    insertionSortCeldas(celdasDeViaje);
-    for (int i = 0; i < celdasDeViaje.size() - 1; ++i) {
-        if (distanciaEntreCeldas(get<1>(celdasDeViaje[i]),get<1>(celdasDeViaje[i+1])) >= 2){
+    insertionSortCeldas(viajeConNombres);
+    int viajeSize = viajeConNombres.size();
+    for (int i = 0; i < viajeSize - 1; ++i) {
+        if (distanciaEntreCeldas(get<1>(viajeConNombres[i]), get<1>(viajeConNombres[i + 1])) >= 2){
             resp++;
         }
     }

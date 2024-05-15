@@ -1,4 +1,4 @@
-#include <algorithm>
+ #include <algorithm>
 #include "auxiliares.h"
 #include <iostream>
 #include <algorithm>
@@ -186,79 +186,43 @@ bool perteneceErrores(tiempo t, const vector<tiempo> &errores){
 }
 
 void corregirMedicion(viaje &v, int k, const vector<tiempo> &errores) {
-    tuple<int, int> tiemposPQ = losDosPuntosMasCercanos(v, k, errores);
-    gps correccion = gpsCorregido(v, k, get<0>((tiemposPQ)), get<1>(tiemposPQ));
+    tuple<int, int> puntosPQ = losDosPuntosMasCercanos(v, k, errores);
+    gps correccion = gpsCorregido(v, k, get<0>((puntosPQ)), get<1>(puntosPQ));
     v[k] = make_tuple(obtenerTiempo(v[k]), correccion);
 }
 
 tuple<int, int> losDosPuntosMasCercanos(const viaje &v, int k, const vector<tiempo> &errores){
     int P=0, Q=0;
     tiempo max = get<1>(obtenerMinMaxTiempo(v));
-    tiempo minP = max;
-    tiempo minQ = max;
+    tiempo min = max;
     tiempo actual;
     for (int i = 0; i < v.size(); i++) {
         actual = abs(obtenerTiempo(v[k]) - obtenerTiempo(v[i]));
-        if (not(perteneceErrores(obtenerTiempo(v[i]), errores))) {
-            if (actual < minP) {
-                P = i;
-                minP = actual;
-            }
-            if (i != P && actual < minQ) {
-                Q = i;
-                minQ = actual;
-            }
+        if( not(perteneceErrores(obtenerTiempo(v[i]), errores)) && actual < min){
+            P=i;
+            min = actual;
+        }
+    }
+    min = max;
+    for (int i = 0; i < v.size(); i++) {
+        actual = abs(obtenerTiempo(v[k]) - obtenerTiempo(v[i]));
+        if (not perteneceErrores(obtenerTiempo(v[i]), errores) && actual < min && i != P){
+            Q=i;
+            min = actual;
         }
     }
     return make_pair(P, Q);
 }
-/*
-gps gpsCorregido(viaje v, int K, int P, int Q){ // P es el punto mas cercano a K.
+
+gps gpsCorregido(viaje v, int K, int P, int Q){                             // P es el punto mas cercano a K.
     gps        pP = obtenerPosicion(v[P]),  pQ = obtenerPosicion(v[Q]);
     tiempo     tP = obtenerTiempo(v[P]),    tQ = obtenerTiempo(v[Q]),   tK = obtenerTiempo(v[K]);
-    tiempo     intT         = (tK < tP ? -1.0 : 1.0) * abs(tK - tP) / abs(tQ - tP);//
+    tiempo     factorT         = (tK < tP ? -1.0 : 1.0) * abs(tK - tP) / abs(tQ - tP);
     distancia  latPQ        = (tP < tQ) ? obtenerLatitud(pQ) - obtenerLatitud(pP) : obtenerLatitud(pP) - obtenerLatitud(pQ);
     distancia  lonPQ        = (tP < tQ) ? obtenerLongitud(pQ) - obtenerLongitud(pP) : obtenerLongitud(pP) - obtenerLongitud(pQ);
-    distancia  latDiff      = latPQ * intT;
-    distancia  lonDiff      = lonPQ * intT;
+    distancia  latDiff      = latPQ * factorT;
+    distancia  lonDiff      = lonPQ * factorT;
     gps        pK           = puntoGps(obtenerLatitud(pP) + latDiff,obtenerLongitud(pP) + lonDiff);
 
     return pK;
-}
-
-/*/
-gps gpsCorregido(viaje v, int K, int P, int Q){ // P es el punto mas cercano a K.
-    gps        pP = obtenerPosicion(v[P]),  pQ = obtenerPosicion(v[Q]);
-    tiempo     tP = obtenerTiempo(v[P]),    tQ = obtenerTiempo(v[Q]),   tK = obtenerTiempo(v[K]);
-    distancia  latDiffEntrePyQ        = (tP < tQ) ? obtenerLatitud(pQ) - obtenerLatitud(pP) : obtenerLatitud(pP) - obtenerLatitud(pQ);
-    distancia  lonDiffEntrePyQ        = (tP < tQ) ? obtenerLongitud(pQ) - obtenerLongitud(pP) : obtenerLongitud(pP) - obtenerLongitud(pQ);
-    tiempo     intervaloTiempo         = (tK < tP ? -1.0 : 1.0) * abs(tK - tP) / abs(tQ - tP);//no se modifica
-    distancia  latPQ        = (tP < tQ) ? obtenerLatitud(pQ) - obtenerLatitud(pP) : obtenerLatitud(pP) - obtenerLatitud(pQ);
-    distancia  lonPQ        = (tP < tQ) ? obtenerLongitud(pQ) - obtenerLongitud(pP) : obtenerLongitud(pP) - obtenerLongitud(pQ);
-    distancia  latDiff      = latPQ * intervaloTiempo;
-    distancia  lonDiff      = lonPQ * intervaloTiempo;
-    //SOHCAHTOA; quiero saber angulo de inclinacion de la recta entre los puntos P y Q.
-    double anguloRectaDePyQ= atan(latDiffEntrePyQ/lonDiffEntrePyQ);
-    double anguloRectaDePyK= atan(latDiff /lonDiff );
-    double velMedia_CAH= (lonDiffEntrePyQ/ cos(anguloRectaDePyQ))/abs(tP-tQ);//velocidad en coordenadas/seg, no en m/s o km/h
-    double velMedia_SIN= (latDiffEntrePyQ/ sin(anguloRectaDePyQ))/abs(tP-tQ);//velocidad en coordenadas/seg
-
-    //
-    gps        pK           = puntoGps(obtenerLatitud(pP) + latDiff,obtenerLongitud(pP) + lonDiff);
-    distancia  latDiffEntrePyK        = (tP < tK) ? obtenerLatitud(pK) - obtenerLatitud(pP) : obtenerLatitud(pP) - obtenerLatitud(pK);
-    distancia  lonDiffEntrePyK        = (tP < tK) ? obtenerLongitud(pK) - obtenerLongitud(pP) : obtenerLongitud(pP) - obtenerLongitud(pK);
-    //
-    distancia hipotenusaDePyK_SOHCAHTOA=(lonDiff/ cos(anguloRectaDePyQ));//si  lon  no varía da 0
-    distancia hipotenusaDePyK_DistKM= distEnKM(get<1>(v[P]),pK);//solo referencia
-    distancia hipotenusaDePyK_DistCoord= sqrt(pow(latDiffEntrePyK ,2)+ pow(lonDiffEntrePyK ,2));
-    //calculo Alernativo:si varian tanto lon y lat, sólo datos dados
-    distancia hipotenusaDePyK_VelMedia_CAH=velMedia_CAH*abs(tP-tK);
-    distancia hipotenusaDePyK_VelMedia_SIN=velMedia_SIN*abs(tP-tK);
-    distancia latDiffpPypK=(hipotenusaDePyK_VelMedia_CAH*sin(anguloRectaDePyQ));
-    distancia lonDiffpPyPk=(hipotenusaDePyK_VelMedia_CAH*(cos(anguloRectaDePyQ)));
-    //por relacion trigonometrica
-    distancia lonDiffpPyPk_relTrig=(hipotenusaDePyK_VelMedia_CAH*(sin(pi/2-anguloRectaDePyQ)));
-    gps pK2= puntoGps(obtenerLatitud(pP) + latDiffpPypK,obtenerLongitud(pP) + lonDiffpPyPk);
-
-     return pK2;
 }
